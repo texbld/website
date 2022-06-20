@@ -79,7 +79,7 @@ function Hamburger() {
             {pages.map((page) => (
               <Link
                 as={RouterLink}
-                to={"docs/" + page.path}
+                to={"/docs/" + page.path}
                 key={"/docs/" + page.path}
                 onClick={onClose}
               >
