@@ -19,7 +19,7 @@ function H2(props: { children: React.ReactNode }) {
 
 function H3(props: { children: React.ReactNode }) {
   return (
-    <Heading fontSize={25} fontWeight="bold" m={2}>
+    <Heading fontSize={20} fontWeight="bold" m={2}>
       {props.children}
     </Heading>
   );
@@ -27,7 +27,7 @@ function H3(props: { children: React.ReactNode }) {
 
 function H4(props: { children: React.ReactNode }) {
   return (
-    <Heading fontSize={20} fontWeight="bold" m={2}>
+    <Heading fontSize={15} fontWeight="bold" m={2}>
       {props.children}
     </Heading>
   );

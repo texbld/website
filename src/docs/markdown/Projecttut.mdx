@@ -1,1 +1,53 @@
 # Projects
+
+import { Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+
+Projects are generated via a parent image and contain the files and commands
+that are described by them.
+
+See <Link as={RouterLink} to="/docs/image"> the image documentation </Link> to
+see how images source their parent images for commands and files to be
+scaffolded.
+
+## Scaffolding a new Project
+
+The `texbld generate` command scaffolds a project, copies over all files, and finally writes a `texbld.toml` file which describes its configuration.
+
+### Docker image
+
+Run `texbld generate docker (image name) (your image) (project directory)`
+
+### Local image
+
+Run `texbld generate local (relative path of your local image from ~/.config/texbld/packages) (project directory)`.
+If you want to use a different configuration toml file other than `image.toml`,
+use the `--config` option to indicate what file you want to use.
+
+### GitHub image
+
+Run `texbld generate github (owner) (repository) (project directory)`.
+By default, it will pull the tarball from the `master` branch. However, when
+populating the `texbld.toml`, it will use the GitHub API to check the commit SHA
+and use that as the revision.
+
+The `--rev` option allows you to specify a revision or a branch. The GitHub API
+will be used so that only commit SHA's are used.
+
+The `--sha256` option allows you to specify an exact sha256 of the tarball. This
+can generally be computed for you, so you will likely not use this option very
+often.
+
+## Building the parent image
+
+cd into the project directory and run `texbld build`, or `texbld build --cache`
+if your TeXbld cache has **not been tampered with**. This builds the
+docker image of the parent image.
+
+## Compilation
+
+TeXbld mounts the project directory onto the `/texbld`
+directory in the container prior to any command execution.
+
+In order to run commands, cd into your project directory and run `texbld run (name of the command)`. Commands are specified in the `[commands]` section of
+your `texbld.toml` file.

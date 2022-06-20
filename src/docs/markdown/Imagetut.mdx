@@ -1,1 +1,32 @@
 # Images
+
+## Types
+
+TeXbld recognizes three distinct image types: from your local filesystem, from GitHub, and from Docker.
+Local images must be located in `~/.config/texbld/packages`.
+
+## Creating a custom image
+
+1. cd into `~/.config/texbld/packages`.
+2. Run `texbld generate image myimage`. This creates a new directory named `myimage` and populates it with an `image.toml`.
+3. Edit the `image.toml`, which is pre-populated with all of the allowed
+   configurations. 4. If you want to create another image configuration from the
+   same set of files, create a new toml file (e.g. `anotherimage.toml`) and write
+   it in the same format as the generated `image.toml`.
+
+## Inherits
+
+The `inherits` attribute in `image.toml` is used to describe what type of
+TeXbld-recognized image your image should derive from. The chosen image will be
+inherited using the `FROM` command in a Dockerfile. Furthermore, files copied to
+the docker image (`[files]`), files to be copied to the project
+(`[project.files]`), and project commands (`[project.commands]`) are all
+inherited unless they are overrided by child packages.
+
+## Uploading your image
+
+1. Create a GitHub repository.
+2. cd into the directory where your image resides.
+3. Run `git init .` to initialize the git repository.
+4. Run `git add . && git commit -m "first commit"` to make your first commit.
+5. Add your GitHub repository as a remote and push.

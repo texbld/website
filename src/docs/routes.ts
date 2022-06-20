@@ -9,13 +9,13 @@ export default [
     component: Gettingstarted,
   },
   {
-    path: "image",
-    title: "Setting up Images",
-    component: Imagetut,
-  },
-  {
     path: "project",
     title: "Scaffolding a Project",
     component: Projecttut,
+  },
+  {
+    path: "image",
+    title: "Setting up Images",
+    component: Imagetut,
   },
 ];

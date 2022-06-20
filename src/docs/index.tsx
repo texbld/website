@@ -19,6 +19,7 @@ import {
   useDisclosure,
   useMediaQuery,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Icon } from "../fontawesome";
 import { Link as RouterLink } from "react-router-dom";
@@ -93,6 +94,7 @@ function Hamburger() {
 }
 
 export default function docs() {
+  const gray = useColorModeValue("gray.200", "gray.700");
   const [isWide] = useMediaQuery("(min-width: 600px)");
   return isWide ? (
     <Stack
@@ -100,7 +102,7 @@ export default function docs() {
       p={3}
       direction={"row"}
       justify="center"
-      divider={<StackDivider borderColor="gray.200" />}
+      divider={<StackDivider borderColor={gray} />}
     >
       <Toc />
       <Page />
