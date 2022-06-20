@@ -8,7 +8,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import fontawesome from "./fontawesome";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import components from "./docs";
+import Docs from "./docs";
+import Footer from "./components/Footer";
 
 const App = () => (
   <Box>
@@ -16,7 +17,9 @@ const App = () => (
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/about" element={<About />}></Route>
+      <Route path="/docs/*" element={<Docs />}></Route>
     </Routes>
+    <Footer />
   </Box>
 );
 

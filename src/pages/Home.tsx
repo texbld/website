@@ -51,7 +51,6 @@ export default function Home() {
           </Card>
         </Box>
       </Center>
-      <Footer />
     </Box>
   );
 }

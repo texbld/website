@@ -1,54 +1,114 @@
-import { Code, Divider, Text } from "@chakra-ui/react";
 import React from "react";
+import { Route, Routes } from "react-router-dom";
+import pages from "./routes";
+import components from "./components";
+import {
+  Box,
+  Text,
+  Button,
+  Container,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Link,
+  Stack,
+  StackDivider,
+  useDisclosure,
+  useMediaQuery,
+  Heading,
+} from "@chakra-ui/react";
+import { Icon } from "../fontawesome";
+import { Link as RouterLink } from "react-router-dom";
 
-function H1(props: { children: React.ReactNode }) {
+function NotFound() {
   return (
-    <Text fontSize={40} fontWeight="bold">
-      {props.children}
-    </Text>
+    <Heading fontWeight={"bold"} fontSize={40}>
+      Requested Resource Not Found
+    </Heading>
+  );
+}
+const Page = () => (
+  <Container>
+    <Routes>
+      {pages.map((page) => (
+        <Route
+          path={page.path === "" ? undefined : page.path}
+          index={page.path === ""}
+          key={page.path}
+          element={<page.component components={components} />}
+        />
+      ))}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </Container>
+);
+
+const Toc = () => (
+  <Stack gap={2} direction={"column"} position="sticky" top="0">
+    {pages.map((page) => (
+      <Link as={RouterLink} to={"/docs/" + page.path}>
+        <Text fontWeight={"bold"}>{page.title}</Text>
+      </Link>
+    ))}
+  </Stack>
+);
+
+function Hamburger() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Box>
+        <Button onClick={onOpen}>
+          <Icon icon="fa-solid fa-bars" />
+        </Button>
+      </Box>
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="xs">
+        <DrawerOverlay width={10} />
+        <DrawerContent p={3}>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            <Link as={RouterLink} to="/" onClick={onClose}>
+              TeXbld
+            </Link>
+          </DrawerHeader>
+          <DrawerBody>
+            {pages.map((page) => (
+              <Link
+                as={RouterLink}
+                to={"docs/" + page.path}
+                key={"/docs/" + page.path}
+                onClick={onClose}
+              >
+                <Text fontWeight={"bold"}>{page.title}</Text>
+              </Link>
+            ))}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 }
 
-function H2(props: { children: React.ReactNode }) {
-  return (
-    <Text fontSize={30} fontWeight="bold">
-      {props.children}
-    </Text>
+export default function docs() {
+  const [isWide] = useMediaQuery("(min-width: 600px)");
+  return isWide ? (
+    <Stack
+      m={2}
+      p={3}
+      direction={"row"}
+      justify="center"
+      divider={<StackDivider borderColor="gray.200" />}
+    >
+      <Toc />
+      <Page />
+    </Stack>
+  ) : (
+    <Stack m={2} p={3} direction={"column"}>
+      <Hamburger />
+      <Page />
+    </Stack>
   );
 }
-
-function H3(props: { children: React.ReactNode }) {
-  return (
-    <Text fontSize={25} fontWeight="bold">
-      {props.children}
-    </Text>
-  );
-}
-
-function H4(props: { children: React.ReactNode }) {
-  return (
-    <Text fontSize={20} fontWeight="bold">
-      {props.children}
-    </Text>
-  );
-}
-
-function P(props: { children: React.ReactNode }) {
-  return <Text>{props.children}</Text>;
-}
-
-function CODE(props: { children: React.ReactNode }) {
-  return <Code colorScheme={"blue"}>{props.children}</Code>;
-}
-
-const components = {
-  h1: H1,
-  h2: H2,
-  h3: H3,
-  h4: H4,
-  hr: () => <Divider />,
-  p: P,
-  code: CODE,
-};
-
-export default components as any;
