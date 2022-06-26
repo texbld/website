@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import pages from "./routes";
 import components from "./components";
@@ -20,6 +20,7 @@ import {
   useMediaQuery,
   Heading,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
 import { Icon } from "../fontawesome";
 import { Link as RouterLink } from "react-router-dom";
@@ -33,24 +34,26 @@ function NotFound() {
 }
 const Page = () => (
   <Container>
-    <Routes>
-      {pages.map((page) => (
-        <Route
-          path={page.path === "" ? undefined : page.path}
-          index={page.path === ""}
-          key={page.path}
-          element={<page.component components={components} />}
-        />
-      ))}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        {pages.map((page) => (
+          <Route
+            path={page.path === "" ? undefined : page.path}
+            index={page.path === ""}
+            key={page.path}
+            element={<page.component components={components} />}
+          />
+        ))}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   </Container>
 );
 
 const Toc = () => (
   <Stack gap={2} direction={"column"} position="sticky" top="0">
     {pages.map((page) => (
-      <Link as={RouterLink} to={"/docs/" + page.path}>
+      <Link as={RouterLink} to={"/docs/" + page.path} key={page.path}>
         <Text fontWeight={"bold"}>{page.title}</Text>
       </Link>
     ))}
