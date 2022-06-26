@@ -6,7 +6,9 @@ import {
   Container,
   Flex,
   Heading,
+  Link,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import colors from "../colors";
@@ -50,6 +52,17 @@ export default function Home() {
             consistent builds.
           </Card>
         </Box>
+      </Center>
+      <Center>
+        <VStack>
+          <Heading>Want to Contribute?</Heading>
+          <Text>
+            Send a pull request or issue to our{" "}
+            <Link href="https://github.com/texbld/texbld">
+              GitHub Repository.
+            </Link>{" "}
+          </Text>
+        </VStack>
       </Center>
     </Box>
   );
